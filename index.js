@@ -169,6 +169,22 @@ async function run() {
       )
       res.send(result)
     })
+    //temporaray data insert or database update
+    // app.get('/addprice', async (req, res) => {
+    //   const filter = {}
+    //   const options = { upsert: true }
+    //   const updatedDoc = {
+    //     $set: {
+    //       price: 69,
+    //     },
+    //   }
+    //   const result = await appionmentOptionsCollection.updateMany(
+    //     filter,
+    //     updatedDoc,
+    //     options
+    //   )
+    //   res.send(result)
+    // })
 
     //doctors info
     app.get('/doctors', verifyJWT, verifyAdmin, async (req, res) => {
@@ -186,6 +202,15 @@ async function run() {
       const id = req.params.id
       const filter = { _id: ObjectId(id) }
       const result = await doctorsCollection.deleteOne(filter)
+      res.send(result)
+    })
+
+
+    //payment
+    app.get('/bookings/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) }
+      const result = await bookingsCollection.findOne(query)
       res.send(result)
     })
   } finally {
